@@ -1,23 +1,26 @@
 const { Schema, model } = require('mongoose');
-const dateFormat = require('../utils/dateFormat');
+
 
 const lessonSchema = new Schema({
-    lessonType: {
+    title: {
         type: String,
         required: true,
     },
-    maxRiders: {
+    date: {
         type: String,
         required: true,
         trim: true,
     },
-    time: {
-        type: Date,
-        default: Date.now,
-        get: (timestamp) => dateFormat(timestamp),
+    start: {
+        type: String,
+        required: true,
+    },
+    end: {
+        type: String,
+        required: true,
     },
 });
 
-const Thought = model('Lessons', lessonSchema);
+const Lessons = model('Lessons', lessonSchema);
 
-module.exports = Thought;
+module.exports = Lessons;

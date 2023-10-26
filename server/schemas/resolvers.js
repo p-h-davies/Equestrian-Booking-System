@@ -1,5 +1,4 @@
-const { User } = require('../models');
-const { Lessons } = require('../models')
+const { User, Lessons } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 
@@ -47,9 +46,9 @@ const resolvers = {
 
             return { token, user };
         },
-        addLesson: async (parent, { lessonType, maxRiders, time }) => {
-            const newLesson = await Lessons.create({ lessonType, maxRiders, time });
-            return { newLesson };
+        addLesson: async (parent, { title, date, start, end }) => {
+            const addLesson = await Lessons.create({ title, date, start, end });
+            return addLesson;
         },
         // remove lesson logic
         //update rider level logic

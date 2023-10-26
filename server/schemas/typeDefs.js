@@ -12,10 +12,10 @@ const typeDefs = `
 
   type Lessons {
     _id: ID
-    lessonType: String
-    maxRiders: String
-    time: String
-    riders: [User]!
+    title: String!
+    date: String!
+    start: String!
+    end: String!
   }
 
   type Auth {
@@ -34,7 +34,7 @@ const typeDefs = `
 addUser(username: String!, email: String!, firstName: String!, lastName: String!, password: String!): Auth
     removeUser(userId: ID!): User
     login(email: String!, password: String!): Auth
-    addLesson(lessonType: String!, maxRiders: Int!, time: String!): Lessons
+    addLesson(title: String!, date: String!, start: String!, end: String!): Lessons
     removeLesson(lessonId: ID!): Lessons
   }
 `;

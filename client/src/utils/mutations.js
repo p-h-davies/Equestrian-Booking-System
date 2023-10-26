@@ -24,3 +24,15 @@ export const ADD_USER = gql`
   }`
 
 
+
+export const ADD_LESSON = gql`
+  mutation addLesson($title: String!, $date: String!, $start: String!, $end: String!) {
+    addLesson(title: $title, date: $date, start: $start, end: $end) {
+       _id
+       title
+       date
+       start
+       end
+    }
+  }`
+
