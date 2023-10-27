@@ -36,3 +36,10 @@ export const ADD_LESSON = gql`
     }
   }`
 
+export const REMOVE_LESSONS = gql`
+  mutation removeLessons {
+    removeLessons {
+      _id
+    }
+  }
+`;

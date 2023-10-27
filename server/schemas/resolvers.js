@@ -8,7 +8,12 @@ const resolvers = {
             return User.find().populate('lessons');
         },
         lessons: async () => {
-            return Lessons.find()
+            try {
+                const lessons = await Lessons.find({ title: { $ne: null } });
+                return lessons;
+            } catch (err) {
+                throw new ApolloError('Failed to fetch lessons');
+            }
         },
         me: async (parent, args, context) => {
             if (context.user) {
@@ -50,6 +55,15 @@ const resolvers = {
             const addLesson = await Lessons.create({ title, date, start, end });
             return addLesson;
         },
+        removeLessons: async () => {
+            try {
+                const removedLessons = await Lessons.deleteMany({ title: null });
+                return removedLessons;
+            } catch (err) {
+                throw new ApolloError('Failed to remove lessons');
+            }
+        },
+
         // remove lesson logic
         //update rider level logic
     }

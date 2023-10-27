@@ -5,8 +5,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_LESSON } from "../../utils/mutations";
 import { TimePicker } from 'antd';
 import dayjs from 'dayjs';
-import { updateEventArray } from './eventArray'
-import eventArrays from './eventArray'
+
 
 
 export default function Example({ closeModal }) {
@@ -37,18 +36,6 @@ export default function Example({ closeModal }) {
         } catch (err) {
             console.error(err);
         }
-
-        const calendarStartTime = userFormData.date + "T" + userFormData.start + ":00"
-        const calendarEndTime = userFormData.date + "T" + userFormData.end + ":00"
-
-        console.log('Before update:', eventArrays);
-        updateEventArray({
-            title: userFormData.title,
-            date: userFormData.date,
-            start: calendarStartTime,
-            end: calendarEndTime
-        });
-        console.log('After update:', eventArrays);
 
         setUserFormData({
             title: '', date: '', start: '', end: ''

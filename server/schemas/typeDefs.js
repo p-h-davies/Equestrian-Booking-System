@@ -35,7 +35,7 @@ addUser(username: String!, email: String!, firstName: String!, lastName: String!
     removeUser(userId: ID!): User
     login(email: String!, password: String!): Auth
     addLesson(title: String!, date: String!, start: String!, end: String!): Lessons
-    removeLesson(lessonId: ID!): Lessons
+    removeLessons(title: String!): Lessons
   }
 `;
 
