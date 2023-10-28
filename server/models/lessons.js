@@ -19,7 +19,21 @@ const lessonSchema = new Schema({
         type: String,
 
     },
+    limit: {
+        type: String,
+
+    },
+    users: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            autopopulate: true,
+        },
+    ],
 });
+
+
+lessonSchema.plugin(require('mongoose-autopopulate'));
 
 const Lessons = model('Lessons', lessonSchema);
 

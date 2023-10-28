@@ -34,9 +34,11 @@ const userSchema = new Schema({
         {
             type: Schema.Types.ObjectId,
             ref: 'Lessons',
+            autopopulate: true,
         },
     ],
 });
+
 
 userSchema.pre('save', async function (next) {
     if (this.isNew || this.isModified('password')) {
@@ -50,6 +52,8 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
+
+userSchema.plugin(require('mongoose-autopopulate'));
 
 const User = model('User', userSchema);
 

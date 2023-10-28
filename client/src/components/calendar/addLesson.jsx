@@ -8,8 +8,8 @@ import dayjs from 'dayjs';
 
 
 
-export default function Example({ closeModal }) {
-    const [userFormData, setUserFormData] = useState({ title: '', date: '', start: '', end: '' });
+export default function AddLesson({ closeModal }) {
+    const [userFormData, setUserFormData] = useState({ title: '', date: '', start: '', end: '', limit: '' });
 
     const [addLesson, { error }] = useMutation(ADD_LESSON);
 
@@ -38,7 +38,7 @@ export default function Example({ closeModal }) {
         }
 
         setUserFormData({
-            title: '', date: '', start: '', end: ''
+            title: '', date: '', start: '', end: '', limit: ''
         });
 
     };
@@ -109,6 +109,20 @@ export default function Example({ closeModal }) {
                                 onChange={(time, timeString) => setUserFormData({ ...userFormData, end: timeString })}
                             />
                         </Form.Group>
+
+                        <Form.Group className='mb-3'>
+                            <Form.Label htmlFor='limit'>Max Riders</Form.Label>
+                            <Form.Control
+                                id="limit"
+                                type='text'
+                                placeholder='Max Riders'
+                                name='limit'
+                                onChange={handleInputChange}
+                                value={userFormData.limit}
+                                required
+                            />
+                        </Form.Group>
+
                         <Button
                             type='submit'
                         >

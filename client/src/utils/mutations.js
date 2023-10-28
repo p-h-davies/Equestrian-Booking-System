@@ -26,13 +26,14 @@ export const ADD_USER = gql`
 
 
 export const ADD_LESSON = gql`
-  mutation addLesson($title: String!, $date: String!, $start: String!, $end: String!) {
-    addLesson(title: $title, date: $date, start: $start, end: $end) {
+  mutation addLesson($title: String!, $date: String!, $start: String!, $end: String!, $limit: String!) {
+    addLesson(title: $title, date: $date, start: $start, end: $end, limit: $limit) {
        _id
        title
        date
        start
        end
+       limit
     }
   }`
 
@@ -40,6 +41,23 @@ export const REMOVE_LESSONS = gql`
   mutation removeLessons {
     removeLessons {
       _id
+    }
+  }
+`;
+
+export const BOOK_LESSON = gql`
+  mutation BookLesson($lessonId: ID!) {
+    bookLesson(lessonId: $lessonId) {
+      _id
+      username
+      email
+      lessons {
+        _id
+        title
+        date
+        start
+        end
+      }
     }
   }
 `;

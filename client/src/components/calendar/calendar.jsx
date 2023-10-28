@@ -1,38 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid'
-import Example from './addLesson'
 import { useQuery } from '@apollo/client';
 import { QUERY_LESSONS } from "../../utils/queries"
-import { Calendar } from '@fullcalendar/core';
-
-
-
-//universal function
-// get lessons from database
-//for each, create an object to go into the EventsArrays array
-//push into EventsArrays
-//reset calendar
-
-
+import EventModal from './bookLesson';
 
 function BigCalendar() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [events, setEvents] = useState([]);
-
+    const [selectedEvent, setSelectedEvent] = useState(null);
 
     const { loading, error, data } = useQuery(QUERY_LESSONS);
 
     useEffect(() => {
-        console.log("loading:", loading);
-        console.log("error:", error);
-
         if (!loading && !error && data) {
-            console.log(data.lessons);
             const mappedEvents = data.lessons
                 .filter(lesson => lesson.title && lesson.date && lesson.start && lesson.end)
                 .map((lesson) => ({
+                    id: lesson._id,
                     title: lesson.title,
                     date: lesson.date,
                     start: `${lesson.date}T${lesson.start}:00`,
@@ -40,35 +25,38 @@ function BigCalendar() {
                 }));
 
             setEvents(mappedEvents);
-            console.log(mappedEvents);
         }
     }, [data, loading, error]);
 
-    const openModal = () => {
-        setIsModalOpen(true);
+    const handleEventClick = (info) => {
+        setSelectedEvent(info.event);
     };
 
     const closeModal = () => {
-        setIsModalOpen(false);
+        setSelectedEvent(null);
     };
 
     return (
         <div>
-            <button onClick={openModal}>Click Me</button>
             <FullCalendar
                 plugins={[dayGridPlugin, timeGridPlugin]}
                 initialView="timeGridWeek"
                 headerToolbar={{
-                    left: 'prev,next',
-                    center: 'title',
-                    right: 'timeGridWeek,timeGridDay',
+                    left: "prev,next",
+                    center: "title",
+                    right: "timeGridWeek,timeGridDay",
                 }}
                 events={events}
+                eventClick={handleEventClick}
             />
-            {isModalOpen && <Example closeModal={closeModal} />}
+            {selectedEvent && (
+                <EventModal
+                    info={{ event: selectedEvent }}
+                    closeModal={closeModal}
+                />
+            )}
         </div>
     );
 }
 
 export default BigCalendar;
-

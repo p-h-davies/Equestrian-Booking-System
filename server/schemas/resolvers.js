@@ -9,7 +9,7 @@ const resolvers = {
         },
         lessons: async () => {
             try {
-                const lessons = await Lessons.find({ title: { $ne: null } });
+                const lessons = await Lessons.find({ title: { $ne: null } }).populate('users');
                 return lessons;
             } catch (err) {
                 throw new ApolloError('Failed to fetch lessons');
@@ -51,8 +51,8 @@ const resolvers = {
 
             return { token, user };
         },
-        addLesson: async (parent, { title, date, start, end }) => {
-            const addLesson = await Lessons.create({ title, date, start, end });
+        addLesson: async (parent, { title, date, start, end, limit }) => {
+            const addLesson = await Lessons.create({ title, date, start, end, limit });
             return addLesson;
         },
         removeLessons: async () => {
@@ -63,10 +63,50 @@ const resolvers = {
                 throw new ApolloError('Failed to remove lessons');
             }
         },
+        bookLesson: async (_, { lessonId }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('Not logged in');
+            }
 
-        // remove lesson logic
-        //update rider level logic
-    }
+            try {
+                const lesson = await Lessons.findById(lessonId);
+
+                if (!lesson) {
+                    throw new Error('Lesson not found');
+                }
+
+                const user = await User.findById(context.user._id);
+
+                if (!user) {
+                    throw new Error('User not found');
+                }
+
+                // Check if the lesson is already in the user's lessons array
+                const isBooked = user.lessons.some((lesson) => lesson.equals(lessonId));
+
+                if (isBooked) {
+                    throw new Error('Lesson is already booked');
+                }
+
+                // Push lesson into user's lessons array
+                user.lessons.push(lessonId);
+
+                // Push user into lesson's users array
+                lesson.users.push(user._id);
+
+                await Promise.all([user.save(), lesson.save()]);
+
+                return user;
+            } catch (err) {
+                console.error(`Error booking lesson: ${err}`);
+                throw new Error('Could not book lesson');
+            }
+        }
+    },
 }
+
+
+// remove lesson logic
+//update rider level logic
 
 module.exports = resolvers;

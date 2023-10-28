@@ -16,7 +16,10 @@ const typeDefs = `
     date: String!
     start: String!
     end: String!
+    limit: String
+    users: [User]!
   }
+
 
   type Auth {
     token: ID!
@@ -31,11 +34,12 @@ const typeDefs = `
   }
 
   type Mutation {
-addUser(username: String!, email: String!, firstName: String!, lastName: String!, password: String!): Auth
+    addUser(username: String!, email: String!, firstName: String!, lastName: String!, password: String!): Auth
     removeUser(userId: ID!): User
     login(email: String!, password: String!): Auth
-    addLesson(title: String!, date: String!, start: String!, end: String!): Lessons
+    addLesson(title: String!, date: String!, start: String!, end: String!, limit: String!): Lessons
     removeLessons(title: String!): Lessons
+    bookLesson(lessonId: ID!): User
   }
 `;
 
