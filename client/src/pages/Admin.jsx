@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import AddLesson from '../components/calendar/addLesson'
+import { useMutation } from "@apollo/client"
 
 const Admin = () => {
     const [modalVisible, setModalVisible] = useState(false);
 
     const handleAddClick = () => {
+        console.log("Add Lesson button clicked")
         setModalVisible(true);
     };
 
@@ -15,6 +17,9 @@ const Admin = () => {
     return (
         <main>
             {modalVisible && <AddLesson closeModal={handleModalClose} />}
+            <h2 className="title">Welcome to your admin portal!</h2>
+            <p>Here, you can add & edit lessons, as well as view & edit your customer accounts</p>
+
             <div className="flex-row justify-center">
                 <button
                     onClick={handleAddClick}

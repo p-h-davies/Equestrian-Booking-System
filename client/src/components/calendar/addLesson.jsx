@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from "@apollo/client";
 import { ADD_LESSON } from "../../utils/mutations";
@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 
 
 export default function AddLesson({ closeModal }) {
-    const [userFormData, setUserFormData] = useState({ title: '', date: '', start: '', end: '', limit: '' });
+    const [userFormData, setUserFormData] = useState({ title: '', date: '', start: '', end: '', limit: '', description: '' });
 
     const [addLesson, { error }] = useMutation(ADD_LESSON);
 
@@ -38,101 +38,111 @@ export default function AddLesson({ closeModal }) {
         }
 
         setUserFormData({
-            title: '', date: '', start: '', end: '', limit: ''
+            title: '', date: '', start: '', end: '', limit: '', description: ''
         });
 
     };
+
+    useEffect(() => {
+
+        $('#modal').modal('show');
+        //Fade and exit controls for Bootstrap Modal
+        return () => {
+            $('#modal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        };
+    }, []);
+
     return (
-        <div>
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
-            <link
-                href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
-                rel="stylesheet" />
-            <link
-                rel="stylesheet"
-                href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
-            <script src="https://cdn.tailwindcss.com/3.3.0"></script>
-            <div className="modal-overlay">
-                <div className="modal">
-                    <span className="close" onClick={closeModal}>&times;</span>
-                    <h2>Modal Title</h2>
-                    <Form onSubmit={handleFormSubmit}>
+        <div className="modal show" id="modal" tabIndex="-1" role="dialog" aria-hidden="true" onClick={closeModal}>
+            <div className="modal-dialog modal-dialog-centered" role="document">
+                <div className="modal-content add-les-content" onClick={(e) => e.stopPropagation()}>
+                    <div className="modal-head">
+                        <button type="button" className="close-add" onClick={closeModal}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Add a Lesson</h5>
+                        <Form className="custom-form" onSubmit={handleFormSubmit}>
 
-                        <Form.Group className='mb-3'>
-                            <Form.Label htmlFor='title'>Title</Form.Label>
-                            <Form.Control
-                                id="title"
-                                type='text'
-                                placeholder='title'
-                                name='title'
-                                onChange={handleInputChange}
-                                value={userFormData.title}
-                                required
-                            />
+                            <Form.Group className='mb-3'>
+                                <Form.Label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor='title'>Title</Form.Label>
+                                <Form.Control
+                                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                    id="title"
+                                    type='text'
+                                    placeholder='title'
+                                    name='title'
+                                    onChange={handleInputChange}
+                                    value={userFormData.title}
+                                    required
+                                />
 
-                        </Form.Group>
+                            </Form.Group>
 
-                        <Form.Group className="relative max-w-sm">
-                            <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-                                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                                </svg>
+                            <Form.Group className="relative max-w-sm">
+                                <Form.Label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor='title'>Date</Form.Label>
+                                <Form.Control
+
+                                    id="date"
+                                    type="date"
+                                    name="date"
+                                    onChange={handleInputChange}
+                                    value={userFormData.date}
+                                    required
+                                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                    placeholder="Select date"
+                                />
+
+                            </Form.Group>
+
+                            <div className="form-times">
+                                <Form.Group className="'mb-3'">
+                                    <Form.Label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="start">Start Time</Form.Label>
+                                    <TimePicker
+                                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                        format="HH:mm"
+                                        value={userFormData.start ? dayjs(userFormData.start, 'HH:mm') : null}
+                                        onChange={(time, timeString) => setUserFormData({ ...userFormData, start: timeString })}
+                                    />
+                                </Form.Group>
+
+                                <Form.Group className="relative max-w-sm">
+                                    <Form.Label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="end">End Time</Form.Label>
+                                    <TimePicker
+                                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                        format="HH:mm"
+                                        value={userFormData.end ? dayjs(userFormData.end, 'HH:mm') : null}
+                                        onChange={(time, timeString) => setUserFormData({ ...userFormData, end: timeString })}
+                                    />
+                                </Form.Group>
                             </div>
-                            <Form.Label htmlFor='title'>Date</Form.Label>
-                            <Form.Control
-                                id="date"
-                                type="date"
-                                name="date"
-                                onChange={handleInputChange}
-                                value={userFormData.date}
-                                required
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Select date"
-                            />
 
-                        </Form.Group>
+                            <Form.Group className='mb-3'>
+                                <Form.Label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor='limit'>Max Riders</Form.Label>
+                                <Form.Control
+                                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                    id="limit"
+                                    type='text'
+                                    placeholder='Max Riders'
+                                    name='limit'
+                                    onChange={handleInputChange}
+                                    value={userFormData.limit}
+                                    required
+                                />
+                            </Form.Group>
 
-                        <Form.Group className="relative max-w-sm">
-                            <Form.Label htmlFor="start">Start Time</Form.Label>
-                            <TimePicker
-                                format="HH:mm"
-                                value={userFormData.start ? dayjs(userFormData.start, 'HH:mm') : null}
-                                onChange={(time, timeString) => setUserFormData({ ...userFormData, start: timeString })}
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="relative max-w-sm">
-                            <Form.Label htmlFor="end">End Time</Form.Label>
-                            <TimePicker
-                                format="HH:mm"
-                                value={userFormData.end ? dayjs(userFormData.end, 'HH:mm') : null}
-                                onChange={(time, timeString) => setUserFormData({ ...userFormData, end: timeString })}
-                            />
-                        </Form.Group>
-
-                        <Form.Group className='mb-3'>
-                            <Form.Label htmlFor='limit'>Max Riders</Form.Label>
-                            <Form.Control
-                                id="limit"
-                                type='text'
-                                placeholder='Max Riders'
-                                name='limit'
-                                onChange={handleInputChange}
-                                value={userFormData.limit}
-                                required
-                            />
-                        </Form.Group>
-
-                        <Button
-                            type='submit'
-                        >
-                            Submit
-                        </Button>
-                    </Form>
+                            <Button className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                                type='submit'
+                            >
+                                Submit
+                            </Button>
+                        </Form>
+                    </div>
                 </div>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
-        </div >
+                <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+            </div >
+        </div>
     );
 }
 

@@ -11,6 +11,28 @@ export const QUERY_USER = gql`
   }
 `;
 
+export const QUERY_USERS = gql`
+  query {
+    users {
+      _id
+      username
+      email
+    }
+  }
+`;
+
+export const QUERY_ME = gql`
+  query me {
+    me {
+      _id
+      username
+      email
+      lessons {
+        _id
+      }
+    }
+  }
+`;
 
 export const QUERY_LESSONS = gql`
   query getLessons {

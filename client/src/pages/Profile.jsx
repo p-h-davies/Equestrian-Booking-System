@@ -7,7 +7,14 @@ import { Calendar } from '@fullcalendar/core'
 import timeGridPlugin from '@fullcalendar/timegrid'
 
 
-const Home = () => {
+
+//QUERY_ME 
+//USE LESSONS FROM ARRAY TO CREATE LESSON DIVS
+//CANCEL LESSON 
+
+
+
+const Profile = () => {
 
     return (
         <main>
@@ -20,7 +27,6 @@ const Home = () => {
                     <h3>How to book:</h3>
                     <p>Click on the event which you wish to attend, and confirm you'd like to book the event in the pop up box. This will book you in for the lesson or event. You can view your booked lessons in your profile.</p>
                 </div>
-                <BigCalendar />
             </div>
             <div className="home-titles">
                 <img className="divider" src="../../../images/divider.png"></img>
@@ -29,4 +35,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Profile;

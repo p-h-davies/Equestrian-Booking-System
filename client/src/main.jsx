@@ -7,6 +7,7 @@ import Signup from './pages/Signup.jsx';
 import Login from './pages/Login';
 import ErrorPage from './pages/ErrorPage';
 import Admin from './pages/Admin.jsx';
+import Profile from './pages/Profile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/admin',
         element: <Admin />
+      },
+      {
+        path: '/profile',
+        element: <Profile />
       },
     ]
   },

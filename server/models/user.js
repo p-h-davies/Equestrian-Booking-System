@@ -30,6 +30,9 @@ const userSchema = new Schema({
     level: {
         type: String,
     },
+    description: {
+        type: String,
+    },
     lessons: [
         {
             type: Schema.Types.ObjectId,
