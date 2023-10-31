@@ -10,16 +10,18 @@ import RemoveBtn from './removeLesson';
 
 
 const EventModal = ({ info, closeModal }) => {
+    //Set info as event for later use in modal 
     if (!info || !info.event) {
         return null;
     }
     const { event } = info;
 
     const [bookLesson] = useMutation(BOOK_LESSON);
+
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Track if user is logged in
     const [isAdmin, setIsAdmin] = useState(false); //Track is user is admin
 
-
+    //Send request for lesson booking
     const handleBookLesson = async () => {
         const token = Auth.loggedIn() ? Auth.getToken() : null;
         try {
@@ -40,26 +42,22 @@ const EventModal = ({ info, closeModal }) => {
     const { loading, data } = useQuery(QUERY_ME);
     const userData = data?.me || {};
     const { username, email, lessons } = userData;
+
     //check if user has a lesson in their lessons array whose lessonId matches the eventId, returns a boolean
     const isBooked = lessons && lessons.some((lesson) => lesson._id === event.id);
     const userRole = userData.role;
 
-    console.log(userRole)
 
     useEffect(() => {
         // Sets value of logged in/not logged in
         setIsLoggedIn(Auth.loggedIn());
+        // Sets value of admin/not admin
         setIsAdmin(userRole === "admin");
     }, [userRole]);
 
-    // Logs the value of isLoggedIn, userRole, and isAdmin
-    console.log('isLoggedIn:', isLoggedIn);
-    console.log('userRole:', userRole);
-    console.log('isAdmin:', isAdmin);
-
+    // Fade and exit controls for Bootstrap Modal
     useEffect(() => {
         $('#modal').modal('show');
-        // Fade and exit controls for Bootstrap Modal
         return () => {
             $('#modal').modal('hide');
             $('body').removeClass('modal-open');
@@ -114,12 +112,5 @@ const EventModal = ({ info, closeModal }) => {
 
 
 export default EventModal;
-
-
-//if number of Users in the lesson is longer than the limit, booking is greyed out
-//when click book, adds lesson to user, and adds user to the lesson
-
-
-
 
 

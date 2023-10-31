@@ -1,3 +1,4 @@
+/* Main */
 #root {
   margin: 0 auto;
   text-align: center;
@@ -10,17 +11,35 @@
   display: flex;
   flex-direction: column;
   min-height: 80vh;
-  /* width: 100vw; */
   flex-grow: 1;
 }
 
+.title {
+  font-size: 40px;
+  position: relative;
+  margin: 0px 0px 30px;
+}
+
+.divider {
+  width: 400px
+}
+
+h3 {
+  font-size: 20px;
+  margin: 5px;
+}
+
+p {
+  margin: 10px;
+}
+
+/* Logo */
 .logo {
   width: 200px;
   position: relative;
   left: 100px;
   top: 10px;
 }
-
 
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
@@ -46,18 +65,7 @@
   }
 }
 
-.card {
-  padding: 2em;
-}
-
-.card-text {
-  margin: 5px
-}
-
-.read-the-docs {
-  color: #888;
-}
-
+/* Header */
 .header {
   background-color: white;
   border-bottom-color: #bdbdbd;
@@ -80,6 +88,7 @@
   color: white
 }
 
+/* Forms */
 .custom-form {
   width: 400px;
   display: flex;
@@ -88,7 +97,6 @@
 
 .form-times {
   display: flex;
-  /* align-items: center; */
   margin: 10px;
   justify-content: space-around;
 
@@ -99,22 +107,7 @@
 
 }
 
-.title {
-  font-size: 40px;
-  position: relative;
-  margin: 0px 0px 30px;
-}
-
-.footer {
-  background-color: #1D273D;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  bottom: -100px;
-  position: relative;
-}
-
+/* Calendar */
 .fc-event {
   background-color: #36427A;
 }
@@ -123,26 +116,14 @@
   margin: 30px;
 }
 
-.footer-logo {
-  width: 150px;
-  position: relative;
-}
-
-.footer-btns {
-  position: relative;
-  right: 100px;
-}
-
-.divider {
-  width: 400px
-}
-
+/* HomePage */
 .home-titles {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* Modals */
 .book-info {
   background-color: #1D273D;
   color: white;
@@ -152,25 +133,21 @@
   margin: 10px;
 }
 
-h3 {
-  font-size: 20px;
-  margin: 5px;
-}
+.add-les-content {
+  display: flex;
+  align-items: center;
+  padding: 20px;
 
-p {
-  margin: 10px;
-}
-
-.log-btn:hover {
-  background-color: #1D273D !important
 }
 
 .modal-title {
   font-size: 30px;
 }
 
-.btn-primary {
-  background-color: #1D273D !important
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .modal-content {
@@ -189,16 +166,18 @@ p {
   width: 175px
 }
 
+.log-btn:hover {
+  background-color: #1D273D !important
+}
+
 .add-lesson-btn {
   background-color: #1E428A;
   margin: 10px
 }
 
-.add-les-content {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-
+.btn-primary {
+  background-color: #1D273D !important;
+  margin: 15px;
 }
 
 .close {
@@ -208,4 +187,57 @@ p {
 .close-add {
   color: #1D273D !important;
   font-size: 50px;
+}
+
+/* Profile */
+.lesson-card {
+  border-width: medium;
+  padding: 40px;
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lesson-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.mini-img {
+  width: 50px
+}
+
+.profile-title {
+  font-size: 20px !important
+}
+
+/* Footer */
+.footer {
+  background-color: #1D273D;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: -100px;
+  position: relative;
+}
+
+.footer-logo {
+  width: 150px;
+  position: relative;
+}
+
+.footer-btns {
+  position: relative;
+  right: 100px;
+}
+
+/* Alerts */
+.alert {
+  margin: 15px 0px;
 }

@@ -5,9 +5,11 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 const resolvers = {
     Query: {
         users: async () => {
+            //Find users and populate lessons
             return User.find().populate('lessons');
         },
         lessons: async () => {
+            //find lessons, filtered to ensure only lessons with non-null names show
             try {
                 const lessons = await Lessons.find({ title: { $ne: null } }).populate('users');
                 return lessons;
@@ -16,6 +18,7 @@ const resolvers = {
             }
         },
         me: async (parent, args, context) => {
+            //if user exists, use _id to view all of the user's information
             if (context.user) {
                 const userData = await User
                     .findOne({ _id: context.user._id })
@@ -30,11 +33,14 @@ const resolvers = {
 
     Mutation: {
         addUser: async (parent, { username, email, firstName, lastName, password }) => {
+            //Create a user
             const user = await User.create({ username, email, firstName, lastName, password });
+            //Assign JW token for the user
             const token = signToken(user);
             return { token, user };
         },
         updateUser: async (parent, { id, input }, context) => {
+            //Find user by id and update user with inputted data
             const updatedUser = await User.findOneAndUpdate({ _id: id }, input, {
                 new: true,
             }).exec();
@@ -47,26 +53,27 @@ const resolvers = {
         },
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
-
+            // Make sure the user is authenticated
             if (!user) {
                 throw new AuthenticationError("Username no match");
             }
-
+            //Checks password is correct
             const correctPw = await user.isCorrectPassword(password);
 
             if (!correctPw) {
                 throw new AuthenticationError("pw bad");
             }
-
+            //Assigns JW token to user
             const token = signToken(user);
-
+            //Communciates token, user info and wwhat role the user has
             return { token, user, role: User.role };
         },
         addLesson: async (parent, { title, date, start, end, limit }) => {
+            //Create lesson with the given information
             const addLesson = await Lessons.create({ title, date, start, end, limit });
             return addLesson;
         },
-        //removeLessons currently just used for backend deleting
+        //removeLessons currently just used for backend deleting, can be changed to delete bulk lessons with any title
         removeLessons: async () => {
             try {
                 const removedLessons = await Lessons.deleteMany({ title: null });
@@ -76,6 +83,7 @@ const resolvers = {
             }
         },
         removeLesson: async (parent, { lessonId }) => {
+            //Find Lesson by ID and deletes it
             try {
                 const removedLesson = await Lessons.findByIdAndDelete(lessonId);
                 return removedLesson;
@@ -84,17 +92,19 @@ const resolvers = {
             }
         },
         bookLesson: async (_, { lessonId }, context) => {
+            // Make sure the user is authenticated
             if (!context.user) {
                 throw new AuthenticationError('Not logged in');
             }
 
             try {
+                //Find lesson by ID
                 const lesson = await Lessons.findById(lessonId);
 
                 if (!lesson) {
                     throw new Error('Lesson not found');
                 }
-
+                //Find user by ID
                 const user = await User.findById(context.user._id);
 
                 if (!user) {
@@ -121,12 +131,35 @@ const resolvers = {
                 console.error(`Error booking lesson: ${err}`);
                 throw new Error('Could not book lesson');
             }
-        }
+        },
+        cancelLesson: async (_, { lessonId }, { user }) => {
+            // Make sure the user is authenticated
+            if (!user) {
+                throw new AuthenticationError('You must be logged in to cancel a lesson');
+            }
+
+            try {
+                // Remove the lesson from the user's lessons array
+                const updatedUser = await User.findByIdAndUpdate(
+                    user._id,
+                    { $pull: { lessons: lessonId } },
+                    { new: true }
+                );
+
+                // Remove the user from the lesson's user array
+                await Lessons.findByIdAndUpdate(
+                    lessonId,
+                    { $pull: { users: user._id } }
+                );
+
+                return updatedUser;
+            } catch (err) {
+                console.log(err);
+                throw new Error('Failed to cancel the lesson');
+            }
+        },
     },
 }
 
-
-// remove lesson logic
-//update rider level logic
 
 module.exports = resolvers;

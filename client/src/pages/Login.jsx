@@ -6,10 +6,12 @@ import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const Login = (props) => {
-    const [formState, setFormState] = useState({ email: '', password: '' });
+    const [formState, setFormState] = useState({ email: '', password: '' });//Tracks state of form
+
+
     const [login, { error, data }] = useMutation(LOGIN_USER);
 
-    // update state based on form input changes
+    // Update state based on form input changes
     const handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -19,7 +21,7 @@ const Login = (props) => {
         });
     };
 
-    // submit form
+    // Submit form
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         console.log(formState);
@@ -33,7 +35,7 @@ const Login = (props) => {
             console.error(e);
         }
 
-        // clear form values
+        // Clear form values
         setFormState({
             email: '',
             password: '',

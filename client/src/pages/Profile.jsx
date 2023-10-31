@@ -1,45 +1,53 @@
 import React, { useEffect, useState } from 'react';
-import Auth from '../utils/auth';
 import { QUERY_ME } from '../utils/queries';
 import { useQuery } from '@apollo/client';
-
-
-
-
-//QUERY_ME 
-//USE LESSONS FROM ARRAY TO CREATE LESSON DIVS
-//CANCEL LESSON 
-
+import { useMutation } from '@apollo/client';
+import { CANCEL_LESSON } from '../utils/mutations'
 
 
 const Profile = () => {
 
+    //Get user's lessons via QUERY_ME
     const { loading, data } = useQuery(QUERY_ME);
     const userData = data?.me || {};
     const userLessons = userData.lessons;
 
-    console.log(userLessons)
+    const [cancelLesson] = useMutation(CANCEL_LESSON);
 
-    userLessons.forEach(lesson => {
-
-    });
+    //Request to cancel lesson, with lesson id placeholder
+    const handleCancelLesson = (id) => {
+        cancelLesson({
+            variables: { lessonId: id },
+            refetchQueries: [{ query: QUERY_ME }],
+        });
+    };
 
     return (
         <main>
             <div className="home-titles">
-                <h2 className="title">Book with LBR Equestrian!</h2>
+                <h2 className="title">Your Lessons!</h2>
                 <img className="divider" src="../../../images/divider.png"></img>
             </div>
-            <div className="lesson-card">
-                {userLessons.map((lesson, index) => (
-                    <div key={index} className="lesson-card">
-                        <p>{lesson.title}</p>
-                        <p>Date: {lesson.date}</p>
-                        <p>Start Time: {lesson.startTime}</p>
-                        <p>End Time: {lesson.endTime}</p>
-                    </div>
-                ))}
+            <div className="lesson-cards">
+                {/* Return lesson data for each lesson */}
+                {userLessons ? (
+                    userLessons.map((lesson, index) => (
+                        <div key={index} className="lesson-card">
+                            <img className="mini-img" src="../../images/rider.png"></img>
+                            <h3 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white profile-title">{lesson.title}</h3>
+                            <p><b>Date:</b> {lesson.date}</p>
+                            <p><b>Start Time:</b> {lesson.start}</p>
+                            <p><b>End Time:</b> {lesson.end}</p>
+                            <button className="btn btn-primary" onClick={() => handleCancelLesson(lesson._id)}>
+                                Cancel Lesson
+                            </button>
+                        </div>
+                    ))
+                ) : (
+                    <p>No lessons found.</p>
+                )}
             </div>
+
         </main>
     );
 };

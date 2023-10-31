@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-
+//Lesson model
 const lessonSchema = new Schema({
     title: {
         type: String,
@@ -32,7 +32,7 @@ const lessonSchema = new Schema({
     ],
 });
 
-
+//Auto-populate
 lessonSchema.plugin(require('mongoose-autopopulate'));
 
 const Lessons = model('Lessons', lessonSchema);

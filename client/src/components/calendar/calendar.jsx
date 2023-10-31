@@ -5,6 +5,9 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import { useQuery } from '@apollo/client';
 import { QUERY_LESSONS } from "../../utils/queries"
 import EventModal from './bookLesson';
+import moment from 'moment';
+import 'moment/locale/en-gb';
+
 
 function BigCalendar() {
     const [events, setEvents] = useState([]);
@@ -20,8 +23,8 @@ function BigCalendar() {
                     id: lesson._id,
                     title: lesson.title,
                     date: lesson.date,
-                    start: `${lesson.date}T${lesson.start}:00`,
-                    end: `${lesson.date}T${lesson.end}:00`,
+                    start: moment(`${lesson.date} ${lesson.start}`, 'YYYY-MM-DD HH:mm').toDate(),
+                    end: moment(`${lesson.date} ${lesson.end}`, 'YYYY-MM-DD HH:mm').toDate(),
                 }));
 
             setEvents(mappedEvents);

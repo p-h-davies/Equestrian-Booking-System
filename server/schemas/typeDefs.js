@@ -47,12 +47,13 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, firstName: String!, lastName: String!, password: String!): Auth
     removeUser(userId: ID!): User
+    updateUser(id: ID!, input: UpdateUserInput!): User!
     login(email: String!, password: String!): Auth
     addLesson(title: String!, date: String!, start: String!, end: String!, limit: String!): Lessons
     removeLessons(title: String!): Lessons
     removeLesson(lessonId: ID!): Lessons
     bookLesson(lessonId: ID!): User
-    updateUser(id: ID!, input: UpdateUserInput!): User!
+    cancelLesson(lessonId: ID!): User
   }
 `;
 

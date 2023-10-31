@@ -1,3 +1,4 @@
+//Export models
 const User = require('./user');
 const Lessons = require('./lessons');
 

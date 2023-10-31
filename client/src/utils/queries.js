@@ -30,6 +30,10 @@ export const QUERY_ME = gql`
       role
       lessons {
         _id
+        title
+        date
+        start
+        end
       }
     }
   }

@@ -9,6 +9,7 @@ import ErrorPage from './pages/ErrorPage';
 import Admin from './pages/Admin.jsx';
 import Profile from './pages/Profile.jsx';
 
+//Front end routing 
 const router = createBrowserRouter([
   {
     path: "/",

@@ -53,6 +53,19 @@ export const REMOVE_LESSON = gql`
   }
 `;
 
+export const CANCEL_LESSON = gql`
+  mutation CancelLesson($lessonId: ID!) {
+    cancelLesson(lessonId: $lessonId) {
+      _id
+      username
+      lessons {
+        _id
+        date
+      }
+    }
+  }
+`;
+
 export const UPDATE_USER = gql`
   mutation UpdateUser($id: ID!, $input: UpdateUserInput!) {
     updateUser(id: $id, input: $input) {

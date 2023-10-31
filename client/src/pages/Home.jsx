@@ -7,6 +7,8 @@ import { QUERY_ME } from '../utils/queries.js';
 const Home = () => {
 
     const [isAdmin, setIsAdmin] = useState(false); //Track is user is admin
+
+    //Get user data, specifically looking for role value
     const { loading, data } = useQuery(QUERY_ME);
     const userData = data?.me || {};
 

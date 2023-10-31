@@ -28,16 +28,8 @@ export default function AddLesson({ closeModal }) {
         }
     };
 
-    const handleFormSubmit = async (event) => {
+    const handleFormSubmit = async () => {
         event.preventDefault();
-
-
-        // check if form has everything
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
 
         try {
             const { data } = await addLesson({
@@ -73,7 +65,10 @@ export default function AddLesson({ closeModal }) {
                         <button type="button" className="close-add" onClick={closeModal}>
                             <span className="close-add" aria-hidden="true">&times;</span>
                         </button>
-                        <h5 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Add a Lesson</h5>
+                        <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Add a Lesson</h3>
+                        <div class="alert alert-info" role="alert">
+                            You'll need to refresh your page to see your new lesson!
+                        </div>
                         <Form className="custom-form" onSubmit={handleFormSubmit}>
 
                             <Form.Group className='mb-3'>

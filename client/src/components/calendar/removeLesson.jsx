@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Auth from '../../utils/auth';
 import { QUERY_LESSONS, QUERY_ME } from '../../utils/queries';
 import { useMutation } from '@apollo/client';
 import { REMOVE_LESSON } from '../../utils/mutations';
-import { useQuery } from '@apollo/client';
+
 
 
 const RemoveBtn = ({ info, closeModal }) => {
+    //Sets event as info for use in modal - this component is sent to the booking modal
     if (!info || !info.event) {
         return null;
     }
@@ -14,10 +14,8 @@ const RemoveBtn = ({ info, closeModal }) => {
 
     const [removeLesson] = useMutation(REMOVE_LESSON);
 
-
-
+    //Function to send request to remove the lesson from the calendar 
     const handleRemoveLesson = async () => {
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
         try {
             const lessonId = event.id;
             console.log(lessonId)
@@ -36,7 +34,7 @@ const RemoveBtn = ({ info, closeModal }) => {
 
     return (
         <button className="btn btn-primary" onClick={handleRemoveLesson}>
-            Remove Lesson
+            Cancel Lesson
         </button>
     );
 };
