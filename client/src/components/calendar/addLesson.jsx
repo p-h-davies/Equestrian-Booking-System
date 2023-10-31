@@ -7,19 +7,30 @@ import { TimePicker } from 'antd';
 import dayjs from 'dayjs';
 
 
-
 export default function AddLesson({ closeModal }) {
     const [userFormData, setUserFormData] = useState({ title: '', date: '', start: '', end: '', limit: '', description: '' });
 
+
     const [addLesson, { error }] = useMutation(ADD_LESSON);
+    const [showAlert, setShowAlert] = useState(false);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setUserFormData({ ...userFormData, [name]: value });
     };
 
+    const handleClickSubmit = (event) => {
+        event.preventDefault();
+        if (!userFormData.start || !userFormData.end) {
+            setShowAlert(true);
+        } else {
+            handleFormSubmit();
+        }
+    };
+
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+
 
         // check if form has everything
         const form = event.currentTarget;
@@ -60,7 +71,7 @@ export default function AddLesson({ closeModal }) {
                 <div className="modal-content add-les-content" onClick={(e) => e.stopPropagation()}>
                     <div className="modal-head">
                         <button type="button" className="close-add" onClick={closeModal}>
-                            <span aria-hidden="true">&times;</span>
+                            <span className="close-add" aria-hidden="true">&times;</span>
                         </button>
                         <h5 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Add a Lesson</h5>
                         <Form className="custom-form" onSubmit={handleFormSubmit}>
@@ -104,6 +115,7 @@ export default function AddLesson({ closeModal }) {
                                         format="HH:mm"
                                         value={userFormData.start ? dayjs(userFormData.start, 'HH:mm') : null}
                                         onChange={(time, timeString) => setUserFormData({ ...userFormData, start: timeString })}
+                                        required
                                     />
                                 </Form.Group>
 
@@ -114,9 +126,16 @@ export default function AddLesson({ closeModal }) {
                                         format="HH:mm"
                                         value={userFormData.end ? dayjs(userFormData.end, 'HH:mm') : null}
                                         onChange={(time, timeString) => setUserFormData({ ...userFormData, end: timeString })}
+                                        required
                                     />
                                 </Form.Group>
                             </div>
+
+                            {showAlert && !userFormData.start && !userFormData.end && (
+                                <div className="alert alert-danger" role="alert">
+                                    Please provide both the start and end times.
+                                </div>
+                            )}
 
                             <Form.Group className='mb-3'>
                                 <Form.Label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor='limit'>Max Riders</Form.Label>
@@ -133,7 +152,7 @@ export default function AddLesson({ closeModal }) {
                             </Form.Group>
 
                             <Button className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-                                type='submit'
+                                type='submit' onClick={handleClickSubmit}
                             >
                                 Submit
                             </Button>

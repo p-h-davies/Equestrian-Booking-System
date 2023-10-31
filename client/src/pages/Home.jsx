@@ -1,13 +1,24 @@
-import { useQuery } from '@apollo/client';
 import BigCalendar from '../components/calendar/calendar.jsx';
-import React from 'react'
-import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
-import { Calendar } from '@fullcalendar/core'
-import timeGridPlugin from '@fullcalendar/timegrid'
-
+import Admin from './Admin.jsx';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { QUERY_ME } from '../utils/queries.js';
 
 const Home = () => {
+
+    const [isAdmin, setIsAdmin] = useState(false); //Track is user is admin
+    const { loading, data } = useQuery(QUERY_ME);
+    const userData = data?.me || {};
+
+    const userRole = userData.role;
+
+    console.log(userRole)
+
+    useEffect(() => {
+        // Sets value of logged in/not logged in
+        setIsAdmin(userRole === "admin");
+    }, [userRole]);
+
 
     return (
         <main>
@@ -16,10 +27,20 @@ const Home = () => {
                 <img className="divider" src="../../../images/divider.png"></img>
             </div>
             <div className="calender-div">
-                <div className="book-info">
-                    <h3>How to book:</h3>
-                    <p>Click on the event which you wish to attend, and confirm you'd like to book the event in the pop up box. This will book you in for the lesson or event. You can view your booked lessons in your profile.</p>
-                </div>
+                {!isAdmin && (
+                    <div className="book-info">
+                        <h3><b>How to book:</b></h3>
+                        <p>Click on the event which you wish to attend, and confirm you'd like to book the event in the pop up box. This will book you in for the lesson or event. You can view your booked lessons in your profile.</p>
+                    </div>
+                )}
+                {isAdmin && (
+                    <div className="book-info">
+                        <h3>Admin Actions:</h3>
+                        <p><b>To delete a lesson,</b> click on the lesson and press 'Remove Lesson'.</p>
+                        <p><b>To add a lesson,</b> click the button below.</p>
+                        < Admin />
+                    </div>
+                )}
                 <BigCalendar />
             </div>
             <div className="home-titles">

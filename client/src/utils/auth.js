@@ -36,6 +36,12 @@ class AuthService {
         localStorage.removeItem('id_token');
         window.location.reload();
     }
+
+    getUserRole = () => {
+        return localStorage.getItem('user_role');
+    };
 }
 
-export default new AuthService();
+export const authService = new AuthService();
+export const getUserRole = authService.getUserRole;
+export default authService;

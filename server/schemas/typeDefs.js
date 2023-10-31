@@ -8,6 +8,17 @@ const typeDefs = `
     password: String
     level: String
     lessons: [Lessons]!
+    role: String
+  }
+
+    input UpdateUserInput {
+    username: String
+    email: String
+    firstName: String
+    lastName: String
+    password: String
+    level: String
+    role: String
   }
 
   type Lessons {
@@ -39,7 +50,9 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addLesson(title: String!, date: String!, start: String!, end: String!, limit: String!): Lessons
     removeLessons(title: String!): Lessons
+    removeLesson(lessonId: ID!): Lessons
     bookLesson(lessonId: ID!): User
+    updateUser(id: ID!, input: UpdateUserInput!): User!
   }
 `;
 

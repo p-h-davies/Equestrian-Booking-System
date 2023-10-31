@@ -30,8 +30,9 @@ const userSchema = new Schema({
     level: {
         type: String,
     },
-    description: {
+    role: {
         type: String,
+        default: "user"
     },
     lessons: [
         {

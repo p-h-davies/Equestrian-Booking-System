@@ -27,6 +27,7 @@ export const QUERY_ME = gql`
       _id
       username
       email
+      role
       lessons {
         _id
       }

@@ -189,6 +189,11 @@ p {
   width: 175px
 }
 
+.add-lesson-btn {
+  background-color: #1E428A;
+  margin: 10px
+}
+
 .add-les-content {
   display: flex;
   align-items: center;
@@ -201,5 +206,6 @@ p {
 }
 
 .close-add {
-  color: #1D273D !important
+  color: #1D273D !important;
+  font-size: 50px;
 }

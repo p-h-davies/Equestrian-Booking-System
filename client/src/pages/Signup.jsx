@@ -13,6 +13,7 @@ const Signup = () => {
         firstName: '',
         lastName: '',
         password: '',
+        role: '',
     });
     const [addUser, { error, data }] = useMutation(ADD_USER);
 
@@ -136,6 +137,23 @@ const Signup = () => {
                                     name="password"
                                     type="password"
                                     value={formState.password}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label
+                                    htmlFor="role"
+                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                                >
+                                    Role
+                                </label>
+                                <input
+                                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                    placeholder="role"
+                                    name="role"
+                                    type="role"
+                                    value={formState.role}
                                     onChange={handleChange}
                                     required
                                 />

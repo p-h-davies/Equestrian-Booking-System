@@ -34,6 +34,17 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
+        updateUser: async (parent, { id, input }, context) => {
+            const updatedUser = await User.findOneAndUpdate({ _id: id }, input, {
+                new: true,
+            }).exec();
+
+            if (!updatedUser) {
+                throw new Error('User not found');
+            }
+
+            return updatedUser;
+        },
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
 
@@ -49,18 +60,27 @@ const resolvers = {
 
             const token = signToken(user);
 
-            return { token, user };
+            return { token, user, role: User.role };
         },
         addLesson: async (parent, { title, date, start, end, limit }) => {
             const addLesson = await Lessons.create({ title, date, start, end, limit });
             return addLesson;
         },
+        //removeLessons currently just used for backend deleting
         removeLessons: async () => {
             try {
                 const removedLessons = await Lessons.deleteMany({ title: null });
                 return removedLessons;
             } catch (err) {
                 throw new ApolloError('Failed to remove lessons');
+            }
+        },
+        removeLesson: async (parent, { lessonId }) => {
+            try {
+                const removedLesson = await Lessons.findByIdAndDelete(lessonId);
+                return removedLesson;
+            } catch (err) {
+                throw new ApolloError('Failed to remove lesson');
             }
         },
         bookLesson: async (_, { lessonId }, context) => {

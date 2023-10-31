@@ -4,6 +4,9 @@ import { QUERY_LESSONS, QUERY_ME } from '../../utils/queries';
 import { useMutation } from '@apollo/client';
 import { BOOK_LESSON } from '../../utils/mutations';
 import { useQuery } from '@apollo/client';
+import RemoveBtn from './removeLesson';
+
+
 
 
 const EventModal = ({ info, closeModal }) => {
@@ -14,6 +17,7 @@ const EventModal = ({ info, closeModal }) => {
 
     const [bookLesson] = useMutation(BOOK_LESSON);
     const [isLoggedIn, setIsLoggedIn] = useState(false); // Track if user is logged in
+    const [isAdmin, setIsAdmin] = useState(false); //Track is user is admin
 
 
     const handleBookLesson = async () => {
@@ -35,18 +39,27 @@ const EventModal = ({ info, closeModal }) => {
     //Gets data to see if user has already booked this lesson
     const { loading, data } = useQuery(QUERY_ME);
     const userData = data?.me || {};
-
     const { username, email, lessons } = userData;
     //check if user has a lesson in their lessons array whose lessonId matches the eventId, returns a boolean
     const isBooked = lessons && lessons.some((lesson) => lesson._id === event.id);
+    const userRole = userData.role;
 
-
+    console.log(userRole)
 
     useEffect(() => {
-        //Sets value of logged in/not logged in
+        // Sets value of logged in/not logged in
         setIsLoggedIn(Auth.loggedIn());
+        setIsAdmin(userRole === "admin");
+    }, [userRole]);
+
+    // Logs the value of isLoggedIn, userRole, and isAdmin
+    console.log('isLoggedIn:', isLoggedIn);
+    console.log('userRole:', userRole);
+    console.log('isAdmin:', isAdmin);
+
+    useEffect(() => {
         $('#modal').modal('show');
-        //Fade and exit controls for Bootstrap Modal
+        // Fade and exit controls for Bootstrap Modal
         return () => {
             $('#modal').modal('hide');
             $('body').removeClass('modal-open');
@@ -54,7 +67,6 @@ const EventModal = ({ info, closeModal }) => {
         };
     }, []);
 
-    console.log(event)
 
 
     return (
@@ -85,9 +97,14 @@ const EventModal = ({ info, closeModal }) => {
                                 You've already booked this lesson!
                             </div>
                         )}
-                        <button className="btn btn-primary" onClick={handleBookLesson}>
-                            Book Lesson
-                        </button>
+                        {!isAdmin && (
+                            <button className="btn btn-primary" onClick={handleBookLesson}>
+                                Book Lesson
+                            </button>
+                        )}
+                        {isAdmin && (
+                            <RemoveBtn info={info} closeModal={closeModal} />
+                        )}
                     </div>
                 </div>
             </div>
