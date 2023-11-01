@@ -58,6 +58,16 @@ function BigCalendar() {
         );
     };
 
+    const getEventColor = (eventInfo) => {
+        const { event } = eventInfo;
+        //Set extendedProps according to FullCalendar docs
+        const { usersArrayLength, limit } = event.extendedProps
+        //If the lesson has hit max bookings, add class to grey it out
+        if (usersArrayLength == limit) {
+            return "booked-out"
+        }
+    };
+
     return (
         <div>
             {/* FullCalender requirements */}
@@ -74,6 +84,7 @@ function BigCalendar() {
                 slotMinTime="08:00:00" // Set the minimum time to 8am
                 slotMaxTime="19:00:00" // Set the maximum time to 6pm
                 eventContent={renderEventContent}
+                eventClassNames={getEventColor}
             />
             {selectedEvent && (
                 <EventModal

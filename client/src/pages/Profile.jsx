@@ -29,6 +29,7 @@ const Profile = () => {
             <div className="home-titles">
                 <h2 className="title">Your Lessons!</h2>
                 <img className="divider" src={divider}></img>
+                <p>To see the changes you've made be displayed on the homepage, make sure you refresh!</p>
             </div>
             <div className="lesson-cards">
                 {/* return data for each lesson */}
