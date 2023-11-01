@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import { BOOK_LESSON } from '../../utils/mutations';
 import { useQuery } from '@apollo/client';
 import RemoveBtn from './removeLesson';
+import logo from "../../../images/white-logo.png"
 
 
 
@@ -67,8 +68,6 @@ const EventModal = ({ info, closeModal }) => {
         };
     }, []);
 
-    //set logo
-    const logo = "../../../images/white-logo.png"
 
     return (
         <div className="modal show" id="modal" tabIndex="-1" role="dialog" aria-hidden="true" onClick={closeModal}>

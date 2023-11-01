@@ -3,6 +3,7 @@ import Admin from '../components/admin/Admin.jsx';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries.js';
+import divider from "../../images/divider.png"
 
 const Home = () => {
 
@@ -21,8 +22,6 @@ const Home = () => {
         setIsAdmin(userRole === "admin");
     }, [userRole]);
 
-    //set divider img
-    const divider = "../../../images/divider.png"
 
     return (
         <main>

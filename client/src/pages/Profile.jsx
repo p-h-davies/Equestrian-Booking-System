@@ -3,6 +3,8 @@ import { QUERY_ME } from '../utils/queries';
 import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { CANCEL_LESSON } from '../utils/mutations'
+import divider from "../../images/divider.png"
+import icon from "../../images/rider.png"
 
 
 const Profile = () => {
@@ -21,10 +23,6 @@ const Profile = () => {
             refetchQueries: [{ query: QUERY_ME }],
         });
     };
-
-    //set images
-    const divider = "../../../images/divider.png"
-    const icon = "../../images/rider.png"
 
     return (
         <main>
