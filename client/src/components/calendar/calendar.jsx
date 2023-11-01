@@ -51,6 +51,8 @@ function BigCalendar() {
                 }}
                 events={events}
                 eventClick={handleEventClick}
+                slotMinTime="08:00:00" // Set the minimum time to 8am
+                slotMaxTime="19:00:00" // Set the maximum time to 6pm
             />
             {selectedEvent && (
                 <EventModal

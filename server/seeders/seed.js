@@ -1,44 +1,70 @@
 const { User, Lessons } = require('../models');
+const bcrypt = require('bcrypt');
 
-//Seeding the Database after connection has been established
-function seedDB() {
-    Lessons.find({})
-        .exec()
-        //Checks to see if DB has already been created
-        .then(async collection => {
-            if (collection.length === 0) {
-                //Adds Thought Data
-                try {
-                    const lesson1 = await Lessons.create({ lessonType: 'Solo', maxRiders: '1' });
-                    const lesson2 = await Lessons.create({ lessonType: 'Joint', maxRiders: '2' });
-                    //Adds User Data
-                    await User
-                        .insertMany([
-                            { username: 'horselady', email: 'codingstudent@gmail.com', firstName: 'Alex', lastName: 'Horse', password: 'horses4eva' },
-                            { username: 'charlietheunicorn', email: 'mongoosegirl@gmail.com', firstName: 'Jean', lastName: 'Pony', password: 'password' },
-                        ]);
-                    //Updates User Data to Include Thoughts
-                    await User.findOneAndUpdate(
-                        { username: 'horselady' },
-                        {
-                            $push: { lessons: lesson1._id }
-                        },
-                        { new: true }
-                    );
-                    await User.findOneAndUpdate(
-                        { username: 'charlietheunicorn' },
-                        {
-                            $push: { lessons: lesson2._id }
-                        },
-                        { new: true }
-                    );
-                    console.log('Seeding completed! 🌱')
-                } catch (error) {
-                    console.log(error);
+async function seedDB() {
+    try {
+        //Get relevant monogoDB documents
+        const lessonCollection = await Lessons.find({}).exec();
+        const userCollection = await User.find({}).exec();
+
+        //check if database is empty
+        if (lessonCollection.length === 0 && userCollection.length === 0) {
+
+            const currentDate = new Date().toISOString().split('T')[0];
+
+            //Define new lesson
+            const newLessons = [
+                {
+                    title: 'Private Lesson',
+                    date: currentDate,
+                    start: '11:00 AM',
+                    end: '12:00 PM',
+                    limit: '1',
                 }
-            }
-        });
+            ]
 
+            //Add new lesson to DB
+            const savedLessons = await Lessons.insertMany(newLessons);
+
+            console.log('Lessons seeded:', savedLessons);
+
+            //User password hashing
+            const saltRounds = 10;
+            const hashedPasswords = await Promise.all([
+                bcrypt.hash('password', saltRounds),
+                bcrypt.hash('password', saltRounds),
+            ]);
+
+            //Define new users
+            const newUsers = [
+                {
+                    username: 'admin',
+                    email: 'admin@lbr.com',
+                    firstName: 'Admin',
+                    lastName: 'Horse',
+                    password: hashedPasswords[0],
+                    role: 'admin',
+                },
+                {
+                    username: 'user',
+                    email: 'user@lbr.com',
+                    firstName: 'User',
+                    lastName: 'Pony',
+                    password: hashedPasswords[1],
+                },
+            ];
+
+            //Add new users to DB
+            const savedUsers = await User.insertMany(newUsers);
+
+            console.log('Users seeded:', savedUsers);
+
+            console.log('Seeding completed! 🌱');
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-module.exports = { seedDB }
+
+module.exports = { seedDB };

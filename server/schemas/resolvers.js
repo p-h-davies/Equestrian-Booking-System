@@ -39,6 +39,7 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
+        // ::BACK-END USE CURRENTLY
         updateUser: async (parent, { id, input }, context) => {
             //Find user by id and update user with inputted data
             const updatedUser = await User.findOneAndUpdate({ _id: id }, input, {
@@ -51,17 +52,36 @@ const resolvers = {
 
             return updatedUser;
         },
+        // ::BACK-END USE CURRENTLY
+        removeUser: async (parent, { userId }) => {
+            //Find Lesson by ID and deletes it
+            try {
+                const removedUser = await User.findByIdAndDelete(userId);
+                return removedUser;
+            } catch (err) {
+                throw new ApolloError('Failed to remove user');
+            }
+        },
+        // ::BACK-END USE CURRENTLY
+        removeUsers: async () => {
+            try {
+                const removedUsers = await User.deleteMany({ role: "user" });
+                return removedUsers;
+            } catch (err) {
+                throw new ApolloError('Failed to remove users');
+            }
+        },
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
             // Make sure the user is authenticated
             if (!user) {
-                throw new AuthenticationError("Username no match");
+                throw new AuthenticationError("Login information is incorrect");
             }
             //Checks password is correct
             const correctPw = await user.isCorrectPassword(password);
 
             if (!correctPw) {
-                throw new AuthenticationError("pw bad");
+                throw new AuthenticationError("Login information is incorrect");
             }
             //Assigns JW token to user
             const token = signToken(user);
@@ -73,7 +93,7 @@ const resolvers = {
             const addLesson = await Lessons.create({ title, date, start, end, limit });
             return addLesson;
         },
-        //removeLessons currently just used for backend deleting, can be changed to delete bulk lessons with any title
+        //BACK-END USE CURRENTLY:: removeLessons currently just used for backend deleting, can be changed to delete bulk lessons with any title
         removeLessons: async () => {
             try {
                 const removedLessons = await Lessons.deleteMany({ title: null });
