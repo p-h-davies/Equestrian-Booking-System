@@ -66,7 +66,7 @@ export default function AddLesson({ closeModal }) {
                             <span className="close-add" aria-hidden="true">&times;</span>
                         </button>
                         <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Add a Lesson</h3>
-                        <div class="alert alert-info" role="alert">
+                        <div className="alert alert-info" role="alert">
                             You'll need to refresh your page to see your new lesson!
                         </div>
                         <Form className="custom-form" onSubmit={handleFormSubmit}>

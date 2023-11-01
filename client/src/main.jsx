@@ -1,5 +1,7 @@
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+
 
 import App from './App.jsx';
 import Home from './pages/Home.jsx';
@@ -10,34 +12,20 @@ import Admin from './pages/Admin.jsx';
 import Profile from './pages/Profile.jsx';
 
 //Front end routing 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: <Home />
-      }, {
-        path: '/login',
-        element: <Login />
-      }, {
-        path: '/signup',
-        element: <Signup />
-      },
-      {
-        path: '/admin',
-        element: <Admin />
-      },
-      {
-        path: '/profile',
-        element: <Profile />
-      },
-    ]
-  },
-]);
+const router = (
+  <Router>
+    <Routes>
+      <Route path="/" element={<App />}>
+        <Route index element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/profile" element={<Profile />} />
+      </Route>
+      <Route path="*" element={<ErrorPage />} />
+    </Routes>
+  </Router>
+);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
-)
+
+ReactDOM.createRoot(document.getElementById('root')).render(router);
