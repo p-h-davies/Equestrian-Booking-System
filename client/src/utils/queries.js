@@ -47,6 +47,10 @@ export const QUERY_LESSONS = gql`
       date
       start
       end
+      limit
+      users {
+        username
+      }
     }
   }
 `;

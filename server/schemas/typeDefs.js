@@ -55,6 +55,7 @@ const typeDefs = `
     removeLesson(lessonId: ID!): Lessons
     bookLesson(lessonId: ID!): User
     cancelLesson(lessonId: ID!): User
+    
   }
 `;
 

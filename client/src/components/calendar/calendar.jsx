@@ -9,6 +9,7 @@ import moment from 'moment';
 import 'moment/locale/en-gb';
 
 
+
 function BigCalendar() {
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
@@ -25,18 +26,35 @@ function BigCalendar() {
                     date: lesson.date,
                     start: moment(`${lesson.date} ${lesson.start}`, 'YYYY-MM-DD HH:mm').toDate(),
                     end: moment(`${lesson.date} ${lesson.end}`, 'YYYY-MM-DD HH:mm').toDate(),
+                    usersArrayLength: lesson.users.length,
+                    limit: lesson.limit
                 }));
 
             setEvents(mappedEvents);
         }
     }, [data, loading, error]);
 
+    console.log(data)
     const handleEventClick = (info) => {
         setSelectedEvent(info.event);
     };
 
     const closeModal = () => {
         setSelectedEvent(null);
+    };
+
+    const renderEventContent = (eventInfo) => {
+        const { event } = eventInfo;
+        const { usersArrayLength, limit } = event.extendedProps
+        console.log('user:', { usersArrayLength })
+        console.log(limit)
+        return (
+            <div>
+                {eventInfo.timeText && <p>{eventInfo.timeText}</p>}
+                <p>{eventInfo.event.title}</p>
+                <p>{usersArrayLength}/{limit} booked</p>
+            </div>
+        );
     };
 
     return (
@@ -53,6 +71,7 @@ function BigCalendar() {
                 eventClick={handleEventClick}
                 slotMinTime="08:00:00" // Set the minimum time to 8am
                 slotMaxTime="19:00:00" // Set the maximum time to 6pm
+                eventContent={renderEventContent}
             />
             {selectedEvent && (
                 <EventModal
@@ -63,5 +82,7 @@ function BigCalendar() {
         </div>
     );
 }
+
+
 
 export default BigCalendar;

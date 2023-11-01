@@ -9,9 +9,9 @@ const resolvers = {
             return User.find().populate('lessons');
         },
         lessons: async () => {
-            //find lessons, filtered to ensure only lessons with non-null names show
+            //find lessons
             try {
-                const lessons = await Lessons.find({ title: { $ne: null } }).populate('users');
+                const lessons = await Lessons.find().populate('users');
                 return lessons;
             } catch (err) {
                 throw new ApolloError('Failed to fetch lessons');

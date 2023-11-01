@@ -132,6 +132,7 @@ p {
 /* Calendar */
 .fc-event {
   background-color: #36427A;
+  height: 90px
 }
 
 .fc {
