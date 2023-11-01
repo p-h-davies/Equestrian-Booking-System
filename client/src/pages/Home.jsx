@@ -15,8 +15,6 @@ const Home = () => {
 
     const userRole = userData.role;
 
-    console.log(userRole)
-
     useEffect(() => {
         // Sets value of logged in/not logged in
         setIsAdmin(userRole === "admin");

@@ -43,13 +43,32 @@ const EventModal = ({ info, closeModal }) => {
     const { loading, data } = useQuery(QUERY_ME);
     const userData = data?.me || {};
     const { username, email, lessons } = userData;
-
-    //check if user has a lesson in their lessons array whose lessonId matches the eventId, returns a boolean
+    //Finds current lesson by ID
     const isBooked = lessons && lessons.some((lesson) => lesson._id === event.id);
 
     //set user role from userData
     const userRole = userData.role;
 
+    //Get lessons data
+    const { loading: LessonLoading, data: lessonData } = useQuery(QUERY_LESSONS);
+    //Finds current lesson by ID
+    const currentLesson = lessonData?.lessons.find((lesson) => lesson._id === event.id);
+
+    // Get the limit and users values from the current lesson
+    const limit = currentLesson?.limit;
+    const bookingNumber = currentLesson?.users.length;
+
+
+    //if the amount of users who have booked the event is equal to the booking limit of the event, make maxBookings true
+    let maxBookings = false
+    if (limit == bookingNumber) {
+        maxBookings = true
+    }
+    //if the lesson has bookings, set hasRiders to true
+    let hasRiders = false
+    if (bookingNumber > 0) {
+        hasRiders = true
+    }
 
     useEffect(() => {
         // Sets value of logged in/not logged in
@@ -97,13 +116,27 @@ const EventModal = ({ info, closeModal }) => {
                                 You've already booked this lesson!
                             </div>
                         )}
-                        {!isAdmin && (
+                        {!isAdmin && !maxBookings && !isBooked && (
                             <button className="btn btn-primary" onClick={handleBookLesson}>
                                 Book Lesson
                             </button>
                         )}
-                        {isAdmin && (
+                        {isAdmin && !hasRiders && (
                             <RemoveBtn info={info} closeModal={closeModal} />
+
+                        )},
+                        {isAdmin && hasRiders && (
+                            <div>
+                                <div className="alert alert-warning" role="alert">
+                                    This lesson has riders already!
+                                </div>
+                                <RemoveBtn info={info} closeModal={closeModal} />
+                            </div>
+                        )}
+                        {maxBookings && isLoggedIn && !isAdmin && !isBooked && (
+                            <div className="alert alert-danger" role="alert">
+                                This lesson is booked out!
+                            </div>
                         )}
                     </div>
                 </div>

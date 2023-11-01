@@ -18,6 +18,7 @@ function BigCalendar() {
 
     useEffect(() => {
         if (!loading && !error && data) {
+            //set lesson data to be included in mappedEvents
             const mappedEvents = data.lessons
                 .filter(lesson => lesson.title && lesson.date && lesson.start && lesson.end)
                 .map((lesson) => ({
@@ -29,12 +30,12 @@ function BigCalendar() {
                     usersArrayLength: lesson.users.length,
                     limit: lesson.limit
                 }));
-
+            //set mappedEvents
             setEvents(mappedEvents);
         }
     }, [data, loading, error]);
 
-    console.log(data)
+    //Modal controls
     const handleEventClick = (info) => {
         setSelectedEvent(info.event);
     };
@@ -43,22 +44,23 @@ function BigCalendar() {
         setSelectedEvent(null);
     };
 
+    //Set content to be rendered in event
     const renderEventContent = (eventInfo) => {
         const { event } = eventInfo;
+        //Set extendedProps according to FullCalendar docs
         const { usersArrayLength, limit } = event.extendedProps
-        console.log('user:', { usersArrayLength })
-        console.log(limit)
         return (
             <div>
                 {eventInfo.timeText && <p>{eventInfo.timeText}</p>}
                 <p>{eventInfo.event.title}</p>
-                <p>{usersArrayLength}/{limit} booked</p>
+                <p className="bookedNumbers">{usersArrayLength}/{limit} booked</p>
             </div>
         );
     };
 
     return (
         <div>
+            {/* FullCalender requirements */}
             <FullCalendar
                 plugins={[dayGridPlugin, timeGridPlugin]}
                 initialView="timeGridWeek"

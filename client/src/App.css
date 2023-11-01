@@ -132,7 +132,6 @@ p {
 /* Calendar */
 .fc-event {
   background-color: #36427A;
-  height: 90px
 }
 
 .fc {
@@ -141,6 +140,22 @@ p {
 
 .calender-div {
   margin: 30px;
+}
+
+.fc-timegrid-slot {
+  height: 35px !important
+}
+
+.bookedNumbers {
+  font-size: 10px;
+  position: relative;
+  top: 5px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.booked-out {
+  background-color: #7c7f8d;
 }
 
 /* End of Calendar */
