@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { QUERY_ME } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
-import logo from "../../../images/logo-blue.png"
+import logo from "../../../images/logo.png"
 
 const Header = () => {
 
