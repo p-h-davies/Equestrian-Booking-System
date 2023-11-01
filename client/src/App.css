@@ -122,6 +122,10 @@ p {
   background-color: #36427A;
 }
 
+.fc {
+  height: 700px;
+}
+
 .calender-div {
   margin: 30px;
 }
