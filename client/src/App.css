@@ -107,6 +107,16 @@ p {
 
 }
 
+.header-btns {
+  display: flex;
+  align-items: center;
+}
+
+.admin-greet {
+  position: relative;
+  left: -100px;
+}
+
 /* Calendar */
 .fc-event {
   background-color: #36427A;

@@ -45,6 +45,7 @@ const EventModal = ({ info, closeModal }) => {
 
     //check if user has a lesson in their lessons array whose lessonId matches the eventId, returns a boolean
     const isBooked = lessons && lessons.some((lesson) => lesson._id === event.id);
+    //set user role from userData
     const userRole = userData.role;
 
 
