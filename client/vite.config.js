@@ -12,7 +12,12 @@ export default defineConfig({
         target: 'http://localhost:3011',
         changeOrigin: true,
         secure: false,
-      }
-    }
-  }
+      },
+    },
+  },
+  build: {
+    rollupOptions: {
+      external: ['react-router-dom'],
+    },
+  },
 })
