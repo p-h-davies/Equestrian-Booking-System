@@ -22,18 +22,22 @@ const Profile = () => {
         });
     };
 
+    //set images
+    const divider = "../../../images/divider.png"
+    const icon = "../../images/rider.png"
+
     return (
         <main>
             <div className="home-titles">
                 <h2 className="title">Your Lessons!</h2>
-                <img className="divider" src="../../../images/divider.png"></img>
+                <img className="divider" src={divider}></img>
             </div>
             <div className="lesson-cards">
-                {/* Return lesson data for each lesson */}
+                {/* return data for each lesson */}
                 {userLessons ? (
                     userLessons.map((lesson, index) => (
                         <div key={index} className="lesson-card">
-                            <img className="mini-img" src="../../images/rider.png"></img>
+                            <img className="mini-img" src={icon}></img>
                             <h3 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white profile-title">{lesson.title}</h3>
                             <p><b>Date:</b> {lesson.date}</p>
                             <p><b>Start Time:</b> {lesson.start}</p>

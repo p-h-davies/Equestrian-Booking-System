@@ -1,5 +1,5 @@
 import BigCalendar from '../components/calendar/calendar.jsx';
-import Admin from './Admin.jsx';
+import Admin from '../components/admin/Admin.jsx';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries.js';
@@ -21,12 +21,14 @@ const Home = () => {
         setIsAdmin(userRole === "admin");
     }, [userRole]);
 
+    //set divider img
+    const divider = "../../../images/divider.png"
 
     return (
         <main>
             <div className="home-titles">
                 <h2 className="title">Book with LBR Equestrian!</h2>
-                <img className="divider" src="../../../images/divider.png"></img>
+                <img className="divider" src={divider}></img>
             </div>
             <div className="calender-div">
                 {!isAdmin && (
@@ -46,7 +48,7 @@ const Home = () => {
                 <BigCalendar />
             </div>
             <div className="home-titles">
-                <img className="divider" src="../../../images/divider.png"></img>
+                <img className="divider" src={divider}></img>
             </div>
         </main>
     );

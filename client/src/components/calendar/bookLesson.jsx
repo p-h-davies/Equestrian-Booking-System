@@ -45,6 +45,7 @@ const EventModal = ({ info, closeModal }) => {
 
     //check if user has a lesson in their lessons array whose lessonId matches the eventId, returns a boolean
     const isBooked = lessons && lessons.some((lesson) => lesson._id === event.id);
+
     //set user role from userData
     const userRole = userData.role;
 
@@ -66,7 +67,8 @@ const EventModal = ({ info, closeModal }) => {
         };
     }, []);
 
-
+    //set logo
+    const logo = "../../../images/white-logo.png"
 
     return (
         <div className="modal show" id="modal" tabIndex="-1" role="dialog" aria-hidden="true" onClick={closeModal}>
@@ -76,7 +78,7 @@ const EventModal = ({ info, closeModal }) => {
                         <button type="button" className="close" onClick={closeModal}>
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <img className="book-logo" src="../../../images/white-logo.png"></img>
+                        <img className="book-logo" src={logo} ></img>
                         <h5 className="modal-title" id="modalLabel">{event.title}</h5>
                     </div>
                     <div className="modal-body">

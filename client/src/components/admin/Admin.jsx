@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AddLesson from '../components/calendar/addLesson'
+import AddLesson from '../calendar/addLesson'
 import { useMutation } from "@apollo/client"
 
 const Admin = () => {

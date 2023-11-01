@@ -25,13 +25,15 @@ const Header = () => {
         event.preventDefault();
         Auth.logout();
     };
+
+    const logo = "../images/LOGO-BLUE.png"
     return (
         <header className="header sticky-top">
             <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
             <div className="header-inner">
                 <div>
                     <Link className="text-light" to="/">
-                        <img className="logo" src="../images/LOGO-BLUE.png"></img>
+                        <img className="logo" src={logo}></img>
                     </Link>
                 </div>
                 <div className="header-btns">
