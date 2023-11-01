@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { QUERY_ME } from '../../utils/queries';
 import { useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
+import logo from "../../../images/LOGO-BLUE.png"
 
 const Header = () => {
 
@@ -26,7 +27,6 @@ const Header = () => {
         Auth.logout();
     };
 
-    const logo = "../images/LOGO-BLUE.png"
     return (
         <header className="header sticky-top">
             <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />

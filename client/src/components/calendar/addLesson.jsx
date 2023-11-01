@@ -62,9 +62,11 @@ export default function AddLesson({ closeModal }) {
             <div className="modal-dialog modal-dialog-centered" role="document">
                 <div className="modal-content add-les-content" onClick={(e) => e.stopPropagation()}>
                     <div className="modal-head">
-                        <button type="button" className="close-add" onClick={closeModal}>
-                            <span className="close-add" aria-hidden="true">&times;</span>
-                        </button>
+                        <div className="button-div">
+                            <button type="button" className="close-add" onClick={closeModal}>
+                                <span className="close-add" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Add a Lesson</h3>
                         <div className="alert alert-info" role="alert">
                             You'll need to refresh your page to see your new lesson!
