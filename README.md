@@ -11,12 +11,10 @@
 ## Description:
 This application is a booking system designed for LBR equestrian, to serve as an additional site which users can click through to from the main website, in order to be able to book lessons at the riding facility.
 
-![Homepage](image-7.png)
-
+![Homepage](<client/images/README imgs/homepage.png>)
 The app features an intuitive UI, where users can see the lessons being offered by the business, and can click on a lesson to book it. It also features a profile page, where users can view the lessons they've booked in for and cancel them if necessary. Moreover, lessons on the calendar show how many riders are allowed to book in for that lesson, and will turn grey and become unbookable if the lesson is at full capacity. 
 
-![User profile](image-9.png)
-
+![User profile](<client/images/README imgs/user-profile.png>)
 When logged in to an admin account, the homepage changes to display an admin control panel, which describes how admins can delete a lesson (by clicking on a calendar event and pressing 'Remove Lesson') and provides an 'Add lesson' button which allows users to add a lesson via a modal pop up.
 
 ![Admin view](image-8.png)
