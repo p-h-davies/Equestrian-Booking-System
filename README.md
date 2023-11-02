@@ -11,20 +11,20 @@
 ## Description:
 This application is a booking system designed for LBR equestrian, to serve as an additional site which users can click through to from the main website, in order to be able to book lessons at the riding facility.
 
-![Homepage](image.png)
+![Homepage](image-7.png)
 
 The app features an intuitive UI, where users can see the lessons being offered by the business, and can click on a lesson to book it. It also features a profile page, where users can view the lessons they've booked in for and cancel them if necessary. Moreover, lessons on the calendar show how many riders are allowed to book in for that lesson, and will turn grey and become unbookable if the lesson is at full capacity. 
 
-![lesson booking](image.png)
+![User profile](image-9.png)
 
 When logged in to an admin account, the homepage changes to display an admin control panel, which describes how admins can delete a lesson (by clicking on a calendar event and pressing 'Remove Lesson') and provides an 'Add lesson' button which allows users to add a lesson via a modal pop up.
 
-![Admin panel](image.png)
+![Admin view](image-8.png)
  
 
 ## Installation:
 
-You can either install this application and run it on your local host (explained below), or you are able to use it via Heroku: https://p-h-davies-text-editor-5135231fbfde.herokuapp.com/
+You can either install this application and run it on your local host (explained below), or you are able to use it via Heroku: https://lbr-equestrian-3915c8ef1e4d.herokuapp.com/
 
 **To install this application and run it on your local host, you will need to:**
 - Ensure you have a Terminator emulator Software installed (such as Terminal for Mac, or Bash for Windows). 
@@ -57,7 +57,7 @@ The actions you can take are divided below by the status of your login/your acco
 
 ### Using the app via Heroku
 
-Navigate to the Heroku link (). 
+Navigate to the Heroku link (https://lbr-equestrian-3915c8ef1e4d.herokuapp.com/). 
 
 Once the application is loaded, you will immediately be able to start undertaking the actions outlined above.
 
@@ -95,17 +95,29 @@ To do this, follow these instructions:
 - Run 'npm run develop' in your terminal, ensuring you are in the root folder of the project.
 - Then, navigate to http://localhost:3011/graphql.
 - On the left-hand side of the page, check 'mutations': 
-![Mutations](image.png)
+- ![Mutations](image.png)
 - Then, check updateUser:
-![Alt text](image-1.png)
+- ![updateUser](image-1.png)
 - Then, select the fields you'd like to be returned (what you'd like to view about the user after the change has been made):
-![Alt text](image-2.png)
+- ![Field Selection (updateUser)](image-2.png)
 - Then, in the variables section, fill it out as seen the image, with the input: {} containing the variable you'd like to change (e.g input: { "username": "write updated username here"}). Once this is done, you can press the blue button circled at the top to run the mutation:
-![Alt text](image-3.png)
+- ![updateUser submission](image-3.png)
 
 #### Delete User
 
 There is currently code enabling you to delete a user, via Apollo Server. This has not been implemented on the front end yet.
+To do this, follow these instructions:
+
+- Run 'npm run develop' in your terminal, ensuring you are in the root folder of the project.
+- Then, navigate to http://localhost:3011/graphql.
+- On the left-hand side of the page, check 'mutations': 
+- ![Mutations](image.png)
+-Then, check 'removeUser':
+![removeUser](image-4.png)
+- Then, select the fields you'd like to be returned (what you'd like to view about the user after the change has been made):
+![Field Selection (removeLesson)](image-5.png)
+- Then, in the variables section, input the _id of the user you want to delete. Once this is done, you can press the blue button circled at the top to run the mutation:
+![removeuser submission](image-6.png)
 
 ## License:
 The license for this project is: No_License.
