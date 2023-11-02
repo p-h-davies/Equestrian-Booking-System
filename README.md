@@ -1,4 +1,4 @@
-# Equestrian Booking System [Static Badge](https://img.shields.io/badge/License:-No_License-green:badgeContent)
+# Equestrian Booking System ![Static Badge](https://img.shields.io/badge/License:-No_License-green:badgeContent)
 
 # Table of Contents
 - [Description](#description)
@@ -112,10 +112,10 @@ To do this, follow these instructions:
 - Then, navigate to http://localhost:3011/graphql.
 - On the left-hand side of the page, check 'mutations': 
 - ![Mutations](image.png)
--Then, check 'removeUser':
-![removeUser](image-4.png)
+- Then, check 'removeUser':
+- ![removeUser](image-4.png)
 - Then, select the fields you'd like to be returned (what you'd like to view about the user after the change has been made):
-![Field Selection (removeLesson)](image-5.png)
+- ![Field Selection (removeLesson)](image-5.png)
 - Then, in the variables section, input the _id of the user you want to delete. Once this is done, you can press the blue button circled at the top to run the mutation:
 ![removeuser submission](image-6.png)
 
